@@ -97,11 +97,8 @@ disease_most_summ2
 
 ### Plot of transect-level prevalence
 
-<<<<<<< HEAD
-```{r prevalence,echo=FALSE}
-=======
-```{r prevalence}
->>>>>>> 8d28d1020ea87037e145994836b1a7b117515702
+```{r prevalence, echo=FALSE}
+
 ggplot(data=disease_most_summ,aes(x=Region,y=prev,fill=TidalHeight))+geom_boxplot()+
   stat_summary(fun.y=mean,geom="point",shape=4,size=4,position=position_dodge(width=0.75))+
   geom_text(data=disease_most_summ2,aes(x=Region,y=1.1,label=count),position=position_dodge(width=0.75))+
@@ -118,11 +115,8 @@ Interesting pattern: AK and WA have mean prevalence above 50%, BB and SD have pr
 
 ### Plot of transect-level severity
 
-<<<<<<< HEAD
-```{r severity,echo=FALSE}
-=======
-```{r severity}
->>>>>>> 8d28d1020ea87037e145994836b1a7b117515702
+
+```{r severity, echo=FALSE}
 ggplot(data=disease_most_summ,aes(x=Region,y=sev,fill=TidalHeight))+geom_boxplot()+
   stat_summary(fun.y=mean,geom="point",shape=4,size=4,position=position_dodge(width=0.75))+
   geom_text(data=disease_most_summ2,aes(x=Region,y=0.52,label=count),position=position_dodge(width=0.75))+
