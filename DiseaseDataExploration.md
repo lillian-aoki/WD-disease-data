@@ -31,20 +31,6 @@ analysis.
 
 ### Plot of transect-level prevalence
 
-<<<<<<< HEAD
-=======
-``` r
-ggplot(data=disease_most_summ,aes(x=Region,y=prev,fill=TidalHeight))+geom_boxplot()+
-  stat_summary(fun.y=mean,geom="point",shape=4,size=4,position=position_dodge(width=0.75))+
-  geom_text(data=disease_most_summ2,aes(x=Region,y=1.1,label=count),position=position_dodge(width=0.75))+
-  scale_y_continuous(limits=c(0,1.12),breaks=c(0,0.25,0.5,0.75,1.0))+
-  scale_fill_manual(values=c("royal blue","light blue"))+
-  ylab("Wasting Disease Prevalence")+
-  theme_bw()+
-  theme()
-```
-
->>>>>>> 8d28d1020ea87037e145994836b1a7b117515702
 ![](DiseaseDataExploration_files/figure-gfm/prevalence-1.png)<!-- -->
 
 This plot shows the distributions of transect-level prevalence by tidal
@@ -57,29 +43,10 @@ the complete Eelisa output is available.
 
 Interesting pattern: AK and WA have mean prevalence above 50%, BB and SD
 have prevalence between 25 and 50% and BC and OR have mean prevalence
-<<<<<<< HEAD
 below 25%. A lot of variability, especially in BB.
 
 ### Plot of transect-level severity
 
-=======
-below 25%. A lot of variability, especially in
-BB.
-
-### Plot of transect-level severity
-
-``` r
-ggplot(data=disease_most_summ,aes(x=Region,y=sev,fill=TidalHeight))+geom_boxplot()+
-  stat_summary(fun.y=mean,geom="point",shape=4,size=4,position=position_dodge(width=0.75))+
-  geom_text(data=disease_most_summ2,aes(x=Region,y=0.52,label=count),position=position_dodge(width=0.75))+
-  scale_y_continuous(limits=c(0,0.52),breaks=c(0,0.1,0.2,0.3,0.4,0.5))+
-  scale_fill_manual(values=c("royal blue","light blue"))+
-  ylab("Wasting Disease Severity")+
-  theme_bw()+
-  theme()
-```
-
->>>>>>> 8d28d1020ea87037e145994836b1a7b117515702
 ![](DiseaseDataExploration_files/figure-gfm/severity-1.png)<!-- -->
 
 Similar to above, this plot shows transect-level severity by tidal
