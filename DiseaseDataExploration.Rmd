@@ -1,8 +1,24 @@
+---
+title: "ExploratoryPrevSev"
+author: "LRA"
+date: "1/13/2020"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(ggplot2)
 site_order <- c("Alaska","British Columbia","Washington","Oregon","Bodega Bay","San Diego")
 site_order2 <- c("AK","BC","WA","OR","BB","SD")
 
+```
+
+## Exploratory analysis of wasting disease prevalence and severity from 2019 intertidal surveys
+
+These plots show WD prevalence and severity based on a subset of the Eelisa output. Once the full output is available, I will update the plots and analysis. 
+
+```{r data,include=FALSE}
 ## read in and organize output from EELISA
 output <- read.csv("NSF_Log_2019_12_16.csv")
 output$location <- ordered(output$location,levels=site_order)
@@ -72,7 +88,16 @@ disease_most_summ2 <- disease_most%>%
   group_by(Region,TidalHeight)%>%
   summarize(prev=mean(prevelance),sev=mean(severity_per,na.rm = TRUE),
             lesion=mean(lesion_area,na.rm=TRUE),count=length(blade_num))
+```
 
+### Summary table of transect-level prevalence and severity by tidal height within region
+```{r summary, echo=FALSE}
+disease_most_summ2
+```
+
+### Plot of transect-level prevalence
+
+```{r prevalence}
 ggplot(data=disease_most_summ,aes(x=Region,y=prev,fill=TidalHeight))+geom_boxplot()+
   stat_summary(fun.y=mean,geom="point",shape=4,size=4,position=position_dodge(width=0.75))+
   geom_text(data=disease_most_summ2,aes(x=Region,y=1.1,label=count),position=position_dodge(width=0.75))+
@@ -81,7 +106,15 @@ ggplot(data=disease_most_summ,aes(x=Region,y=prev,fill=TidalHeight))+geom_boxplo
   ylab("Wasting Disease Prevalence")+
   theme_bw()+
   theme()
+```
 
+This plot shows the distributions of transect-level prevalence by tidal height in each region. The black bar in the box-plot indicates the median prevalence, the X indicates the mean. Numbers at the top of the plot indicate the number of measurements for each box-plot. Note that the total number of shoots per tidal height should be 300 for BC, WA, OR, and SD and 360 for AK and BB. More measurements will be added when the complete Eelisa output is available. 
+
+Interesting pattern: AK and WA have mean prevalence above 50%, BB and SD have prevalence between 25 and 50% and BC and OR have mean prevalence below 25%. A lot of variability, especially in BB.
+
+### Plot of transect-level severity
+
+```{r severity}
 ggplot(data=disease_most_summ,aes(x=Region,y=sev,fill=TidalHeight))+geom_boxplot()+
   stat_summary(fun.y=mean,geom="point",shape=4,size=4,position=position_dodge(width=0.75))+
   geom_text(data=disease_most_summ2,aes(x=Region,y=0.52,label=count),position=position_dodge(width=0.75))+
@@ -90,58 +123,8 @@ ggplot(data=disease_most_summ,aes(x=Region,y=sev,fill=TidalHeight))+geom_boxplot
   ylab("Wasting Disease Severity")+
   theme_bw()+
   theme()
+```
 
+Similar to above, this plot shows transect-level severity by tidal height within region. The black bar in the box-plot indicates the median prevalence, the X indicates the mean. Numbers at the top of the plot indicate the number of measurements for each box-plot. Note that the total number of shoots per tidal height should be 300 for BC, WA, OR, and SD and 360 for AK and BB. More measurements will be added when the complete Eelisa output is available.
 
-ggplot(data=disease_most,aes(x=Region,y=prevelance,fill=TidalHeight))+geom_boxplot()+
-  stat_summary(fun.y=mean,geom="point",shape=4,size=4,position=position_dodge(width=0.75))+
-  geom_text(data=disease_most_summ2,aes(x=Region,y=1.1,label=count),position=position_dodge(width=0.75))+
-  scale_y_continuous(limits=c(0,1.12),breaks=c(0,0.25,0.5,0.75,1.0))+
-  scale_fill_manual(values=c("royal blue","light blue"))+
-  ylab("Wasting Disease Prevalence")+
-  theme_bw()+
-  theme()
-  
-ggplot(disease_most,aes(x=Region,y=prevelance))+geom_boxplot()+
-  theme_bw()+
-  theme(axis.text.x = element_text(angle=90))
-
-# # for now, look at only the successful splits
-# disease2 <- inner_join(blades,output_true,by="SampleID")
-# disease2$BladeArea.cm2 <- ifelse(disease2$BladeArea.cm2=="NA",disease2$lesion_area+disease2$healthy_area/100,disease2$BladeArea.cm2)
-# # need to double-check that the healthy and lesion areas are in mm2?
-# # note that Eelisa areas are less than the length x width areas
-# disease2$prevelance <- ifelse(disease2$severity=="NA","0",disease2$prevelance)
-# hmm <-anti_join(output_true,blades,by="SampleID")
-# disease2_summ <- disease2%>%
-#   group_by(location,site_code,tidal_height)%>%
-#   summarize(prev=mean(prevelance),sev=mean(severity),lesion=mean(lesion_area),count=length(blade_num))
-
-
-ggplot(disease,aes(x=Region,y=prevelance))+geom_jitter()+
-  theme_bw()+
-  theme(axis.text.x = element_text(angle=90))
-
-ggplot(output_summ,aes(x=location,y=sev))+geom_histogram()+
-  theme_bw()+
-  theme(axis.text.x = element_text(angle=90))
-
-sev_dist <- ggplot(output,aes(x=location,y=severity,fill=tidal_height))+geom_boxplot()+
-  scale_fill_manual(values=c("royal blue","light blue"))+
-  theme_bw()+
-  theme(axis.text.x = element_text(angle=90))
-sev_dist
-ggsave(plot=sev_dist,filename = "Severity_Dist.jpg")
-
-sev_dist2 <- ggplot(output,aes(x=site_code,y=severity,fill=tidal_height))+geom_boxplot()+
-  facet_wrap(~location)+
-  scale_fill_manual(values=c("royal blue","light blue"))+
-  theme_bw()+
-  theme(axis.text.x = element_text(angle=90))
-sev_dist2
-
-levels(output$location)
-ggsave(plot=sev_dist2,filename = "Severity_Dist2.jpg")
-
-ggplot(disease,aes(x=prevelance,fill=Region))+geom_histogram()+
-  theme_bw()+
-  theme(axis.text.x = element_text(angle=90))
+The regions are less differentiated, but we see a similar pattern - lowest severity at BC and OR, highest at AK and WA.
