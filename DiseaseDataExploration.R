@@ -73,6 +73,7 @@ disease_most_summ2 <- disease_most%>%
   summarize(prev=mean(prevelance),sev=mean(severity_per,na.rm = TRUE),
             lesion=mean(lesion_area,na.rm=TRUE),count=length(blade_num))
 
+#Transect level prevalence
 ggplot(data=disease_most_summ,aes(x=Region,y=prev,fill=TidalHeight))+geom_boxplot()+
   stat_summary(fun.y=mean,geom="point",shape=4,size=4,position=position_dodge(width=0.75))+
   geom_text(data=disease_most_summ2,aes(x=Region,y=1.1,label=count),position=position_dodge(width=0.75))+
@@ -82,6 +83,7 @@ ggplot(data=disease_most_summ,aes(x=Region,y=prev,fill=TidalHeight))+geom_boxplo
   theme_bw()+
   theme()
 
+#Transect level severity
 ggplot(data=disease_most_summ,aes(x=Region,y=sev,fill=TidalHeight))+geom_boxplot()+
   stat_summary(fun.y=mean,geom="point",shape=4,size=4,position=position_dodge(width=0.75))+
   geom_text(data=disease_most_summ2,aes(x=Region,y=0.52,label=count),position=position_dodge(width=0.75))+
@@ -91,6 +93,25 @@ ggplot(data=disease_most_summ,aes(x=Region,y=sev,fill=TidalHeight))+geom_boxplot
   theme_bw()+
   theme()
 
+#Transect level prevalence, broken out by site
+ggplot(data=disease_most_summ,aes(x=SiteCode,y=prev,fill=TidalHeight))+geom_boxplot()+
+  facet_wrap(~Region)+
+  stat_summary(fun.y=mean,geom="point",shape=4,size=4,position=position_dodge(width=0.75))+
+  scale_y_continuous(limits=c(0,1),breaks=c(0,0.25,0.5,0.75,1.0))+
+  scale_fill_manual(values=c("royal blue","light blue"))+
+  ylab("Wasting Disease Prevalence")+
+  theme_bw()+
+    theme(strip.background = element_rect(fill="white"))
+
+#Transect level severity, broken out by site
+ggplot(data=disease_most_summ,aes(x=SiteCode,y=sev,fill=TidalHeight))+geom_boxplot()+
+  facet_wrap(~Region)+
+  stat_summary(fun.y=mean,geom="point",shape=4,size=4,position=position_dodge(width=0.75))+
+  scale_y_continuous(limits=c(0,0.5),breaks=c(0,0.1,0.2,0.3,0.4,0.5))+
+  scale_fill_manual(values=c("royal blue","light blue"))+
+  ylab("Wasting Disease Prevalence")+
+  theme_bw()+
+  theme(strip.background = element_rect(fill="white"))
 
 ggplot(data=disease_most,aes(x=Region,y=prevelance,fill=TidalHeight))+geom_boxplot()+
   stat_summary(fun.y=mean,geom="point",shape=4,size=4,position=position_dodge(width=0.75))+

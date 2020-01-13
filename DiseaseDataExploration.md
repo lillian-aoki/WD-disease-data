@@ -29,33 +29,44 @@ analysis.
     ## 11 SD     L           0.412  0.0898   14.9    277
     ## 12 SD     U           0.371  0.0549    7.43   283
 
-### Plot of transect-level prevalence
+### Transect-level prevalence
 
 ![](DiseaseDataExploration_files/figure-gfm/prevalence-1.png)<!-- -->
 
 This plot shows the distributions of transect-level prevalence by tidal
 height in each region. The black bar in the box-plot indicates the
 median prevalence, the X indicates the mean. Numbers at the top of the
-plot indicate the number of measurements for each box-plot. Note that
+plot indicate the number of EELISA measurements at each site. Note that
 the total number of shoots per tidal height should be 300 for BC, WA,
 OR, and SD and 360 for AK and BB. More measurements will be added when
-the complete Eelisa output is available.
+the complete EELISA output is available.
 
 Interesting pattern: AK and WA have mean prevalence above 50%, BB and SD
 have prevalence between 25 and 50% and BC and OR have mean prevalence
 below 25%. A lot of variability, especially in BB.
 
-### Plot of transect-level severity
+### Transect-level severity
 
 ![](DiseaseDataExploration_files/figure-gfm/severity-1.png)<!-- -->
 
 Similar to above, this plot shows transect-level severity by tidal
 height within region. The black bar in the box-plot indicates the median
 prevalence, the X indicates the mean. Numbers at the top of the plot
-indicate the number of measurements for each box-plot. Note that the
+indicate the number of EELISA measurements for each site. Note that the
 total number of shoots per tidal height should be 300 for BC, WA, OR,
 and SD and 360 for AK and BB. More measurements will be added when the
-complete Eelisa output is available.
+complete EELISA output is available.
 
 The regions are less differentiated, but we see a similar pattern -
-lowest severity at BC and OR, highest at AK and WA.
+lowest severity at BC and OR, highest at AK and
+WA.
+
+### Transect-level prevalence, broken down by site
+
+![](DiseaseDataExploration_files/figure-gfm/site_prevalence-1.png)<!-- -->
+
+### Transect-level severity, broken down by site
+
+![](DiseaseDataExploration_files/figure-gfm/site_severity-1.png)<!-- -->
+
+A lot of site-level variation, especially in severity.
