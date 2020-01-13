@@ -95,7 +95,7 @@ disease_most_summ2 <- disease_most%>%
 disease_most_summ2
 ```
 
-### Plot of transect-level prevalence
+### Transect-level prevalence
 
 ```{r prevalence, echo=FALSE}
 
@@ -109,11 +109,11 @@ ggplot(data=disease_most_summ,aes(x=Region,y=prev,fill=TidalHeight))+geom_boxplo
   theme()
 ```
 
-This plot shows the distributions of transect-level prevalence by tidal height in each region. The black bar in the box-plot indicates the median prevalence, the X indicates the mean. Numbers at the top of the plot indicate the number of measurements for each box-plot. Note that the total number of shoots per tidal height should be 300 for BC, WA, OR, and SD and 360 for AK and BB. More measurements will be added when the complete Eelisa output is available. 
+This plot shows the distributions of transect-level prevalence by tidal height in each region. The black bar in the box-plot indicates the median prevalence, the X indicates the mean. Numbers at the top of the plot indicate the number of EELISA measurements at each site. Note that the total number of shoots per tidal height should be 300 for BC, WA, OR, and SD and 360 for AK and BB. More measurements will be added when the complete EELISA output is available. 
 
 Interesting pattern: AK and WA have mean prevalence above 50%, BB and SD have prevalence between 25 and 50% and BC and OR have mean prevalence below 25%. A lot of variability, especially in BB.
 
-### Plot of transect-level severity
+### Transect-level severity
 
 
 ```{r severity, echo=FALSE}
@@ -127,6 +127,32 @@ ggplot(data=disease_most_summ,aes(x=Region,y=sev,fill=TidalHeight))+geom_boxplot
   theme()
 ```
 
-Similar to above, this plot shows transect-level severity by tidal height within region. The black bar in the box-plot indicates the median prevalence, the X indicates the mean. Numbers at the top of the plot indicate the number of measurements for each box-plot. Note that the total number of shoots per tidal height should be 300 for BC, WA, OR, and SD and 360 for AK and BB. More measurements will be added when the complete Eelisa output is available.
+Similar to above, this plot shows transect-level severity by tidal height within region. The black bar in the box-plot indicates the median prevalence, the X indicates the mean. Numbers at the top of the plot indicate the number of EELISA measurements for each site. Note that the total number of shoots per tidal height should be 300 for BC, WA, OR, and SD and 360 for AK and BB. More measurements will be added when the complete EELISA output is available.
 
 The regions are less differentiated, but we see a similar pattern - lowest severity at BC and OR, highest at AK and WA.
+
+### Transect-level prevalence, broken down by site
+```{r site_prevalence, echo=FALSE}
+ggplot(data=disease_most_summ,aes(x=SiteCode,y=prev,fill=TidalHeight))+geom_boxplot()+
+  facet_wrap(~Region)+
+  stat_summary(fun.y=mean,geom="point",shape=4,size=2,position=position_dodge(width=0.75))+
+  scale_y_continuous(limits=c(0,1),breaks=c(0,0.25,0.5,0.75,1.0))+
+  scale_fill_manual(values=c("royal blue","light blue"))+
+  ylab("Wasting Disease Prevalence")+
+  theme_bw()+
+    theme(strip.background = element_rect(fill="white"))
+```
+
+### Transect-level severity, broken down by site
+```{r site_severity, echo=FALSE}
+ggplot(data=disease_most_summ,aes(x=SiteCode,y=sev,fill=TidalHeight))+geom_boxplot()+
+  facet_wrap(~Region)+
+  stat_summary(fun.y=mean,geom="point",shape=4,size=2,position=position_dodge(width=0.75))+
+  scale_y_continuous(limits=c(0,0.5),breaks=c(0,0.1,0.2,0.3,0.4,0.5))+
+  scale_fill_manual(values=c("royal blue","light blue"))+
+  ylab("Wasting Disease Prevalence")+
+  theme_bw()+
+  theme(strip.background = element_rect(fill="white"))
+```
+
+A lot of site-level variation, especially in severity. 
