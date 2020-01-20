@@ -152,6 +152,7 @@ ggplot(data=disease_most_summ,aes(x=SiteCode,y=prev,color=TidalHeight))+
        subtitle="Transect-level means, n=3 transects per tidal height per site")+
   theme_bw()+
   theme(strip.background = element_rect(fill="white"))
+
 ```
 
 ### Transect-level severity, broken down by site
@@ -164,7 +165,7 @@ ggplot(data=disease_most_summ,aes(x=SiteCode,y=sev,color=TidalHeight))+
   scale_y_continuous(limits=c(0,0.5),breaks=c(0,0.1,0.2,0.3,0.4,0.5))+
   scale_color_manual(values=c("royal blue","light blue"))+
   xlab("Site Code")+
-  ylab("Wasting Disease Prevalence")+
+  ylab("Wasting Disease Severity")+
   labs(title="Wasting Dieseae Severity",
        subtitle = "Transect-level means, n=3 transects per tidal height per site")+
   theme_bw()+

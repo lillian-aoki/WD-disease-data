@@ -95,7 +95,11 @@ ggplot(data=disease_most_summ,aes(x=Region,y=sev,fill=TidalHeight))+geom_boxplot
   scale_y_continuous(limits=c(0,0.52),breaks=c(0,0.1,0.2,0.3,0.4,0.5))+
   scale_fill_manual(values=c("royal blue","light blue"))+
   ylab("Wasting Disease Severity")+
+<<<<<<< HEAD
   labs(title="Wasting Disease Severity",
+=======
+  labs(title="Wasting Disease Prevalence",
+>>>>>>> f098f627a1722514532089139650e2ad4410778e
        subtitle = "Transect-level means, n=15-18 transects per region")+
   theme_bw()+
   theme()
