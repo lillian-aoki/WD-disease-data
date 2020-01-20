@@ -35,7 +35,7 @@ analysis.
 
 This plot shows the distributions of transect-level prevalence by tidal
 height in each region. The black bar in the box-plot indicates the
-median prevalence, the X indicates the mean. Numbers at the top of the
+median prevalence, the \* indicates the mean. Numbers at the top of the
 plot indicate the number of EELISA measurements at each site. Note that
 the total number of shoots per tidal height should be 300 for BC, WA,
 OR, and SD and 360 for AK and BB. More measurements will be added when
@@ -51,7 +51,7 @@ below 25%. A lot of variability, especially in BB.
 
 Similar to above, this plot shows transect-level severity by tidal
 height within region. The black bar in the box-plot indicates the median
-prevalence, the X indicates the mean. Numbers at the top of the plot
+prevalence, the \* indicates the mean. Numbers at the top of the plot
 indicate the number of EELISA measurements for each site. Note that the
 total number of shoots per tidal height should be 300 for BC, WA, OR,
 and SD and 360 for AK and BB. More measurements will be added when the
