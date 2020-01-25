@@ -4,14 +4,14 @@ site_order <- c("Alaska","British Columbia","Washington","Oregon","Bodega Bay","
 site_order2 <- c("AK","BC","WA","OR","BB","SD")
 
 ## read in and organize output from EELISA
-output <- read.csv("NSF_Log_2019_12_16.csv")
-output$location <- ordered(output$location,levels=site_order)
-output <- separate(output,col=file_name,c("Region","SiteCode","Transect","TidalHeight",NA,NA),sep="[.]",remove = FALSE)
-output <- unite(output,col="SampleID",c("Region","SiteCode","Transect","TidalHeight","blade_num"),sep=".",remove=FALSE)
-output$Region <- ordered(output$Region,levels=site_order2)
+outputOld <- read.csv("NSF_Log_2019_12_16.csv")
+outputOld$location <- ordered(outputOld$location,levels=site_order)
+outputOld <- separate(outputOld,col=file_name,c("Region","SiteCode","Transect","TidalHeight",NA,NA),sep="[.]",remove = FALSE)
+outputOld <- unite(outputOld,col="SampleID",c("Region","SiteCode","Transect","TidalHeight","blade_num"),sep=".",remove=FALSE)
+outputOld$Region <- ordered(outputOld$Region,levels=site_order2)
 
 #subset only EELISA scans split properly
-output_true <- subset(output,correct_num=="TRUE")
+outputOld_true <- subset(outputOld,correct_num=="TRUE")
 which(duplicated(output_true$SampleID))
 which(duplicated(output_true$SampleID,fromLast = TRUE))
 output_true[c(1413,1414,1415,1467,1468,1469),]
