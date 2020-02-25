@@ -1,0 +1,121 @@
+---
+title: "CleanedOutputTidalHeight"
+author: "LRA"
+date: "2/25/2020"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(nlme)
+library(ggplot2)
+Region_order <- c("Alaska","British Columbia","Washington","Oregon","Bodega Bay","San Diego")
+Region_order2 <- c("AK","BC","WA","OR","BB","SD")
+
+```
+
+```{r data, include=FALSE, warning=FALSE}
+summ <- read.csv("Disease_Summ_02-24-20.csv")
+summ$Region <- ordered(summ$Region,levels=Region_order2)
+summ2 <- read.csv("Disease_Summ2_02-24-20.csv")
+summ2$Region <- ordered(summ2$Region,levels=Region_order2)
+summ3 <- read.csv("Disease_Summ3_02-24-20.csv")
+summ3$Region <- ordered(summ3$Region,levels=Region_order2)
+```
+
+### Transect-level prevalence
+
+```{r prevalence, echo=FALSE}
+
+ggplot(data=summ,aes(x=Region,y=prev,fill=TidalHeight))+geom_boxplot()+
+  stat_summary(fun.y=mean,geom="point",shape=8,size=2,position=position_dodge(width=0.75),
+               show.legend = FALSE)+
+  geom_text(data=summ2,aes(x=Region,y=1.1,label=count),position=position_dodge(width=0.75))+
+  scale_y_continuous(limits=c(0,1.12),breaks=c(0,0.25,0.5,0.75,1.0))+
+  scale_fill_manual(values=c("wheat4","wheat3"))+
+  ylab("Wasting Disease Prevalence")+
+  xlab("Region")+
+  labs(title="Wasting Disease Prevalence",
+       subtitle = "Transect-level means, n=15-18 transects per region")+
+  theme_bw()+
+  theme()
+```
+
+Also include prevalence as a bar plot, for an alternative visualization
+
+```{r prevalence-bar,echo=FALSE}
+ggplot(summ2,aes(x=Region,y=prevM,fill=TidalHeight))+geom_col(position=position_dodge(width=0.9))+
+  geom_errorbar(aes(ymin=prevM-2*prevSE,ymax=prevM+2*prevSE),width=0.25,position=position_dodge(width=0.9))+
+  xlab("Region")+
+  ylab("Disease prevalence \n(% of population)")+
+  scale_y_continuous(limits=c(0,1),expand=c(0,0))+
+  scale_fill_manual(values=c("wheat4","wheat3"))+
+  theme_bw()+
+  theme(axis.text=element_text(size=12),
+        axis.title=element_text(size=14))
+```
+
+### Transect-level severity
+
+```{r severity, echo=FALSE}
+ggplot(data=summ,aes(x=Region,y=sev,fill=TidalHeight))+geom_boxplot()+
+  stat_summary(fun.y=mean,geom="point",shape=8,size=2,show.legend=FALSE,
+               position=position_dodge(width=0.75))+
+  geom_text(data=summ2,aes(x=Region,y=0.54,label=count),position=position_dodge(width=0.75))+
+  scale_y_continuous(limits=c(0,0.55),breaks=c(0,0.1,0.2,0.3,0.4,0.5))+
+  scale_fill_manual(values=c("wheat4","wheat3"))+
+  ylab("Wasting Disease Severity")+
+  labs(title="Wasting Disease Severity",
+       subtitle = "Transect-level means, n=15-18 transects per region")+
+  theme_bw()+
+  theme()
+```
+
+Also include severity as a bar plot, for an alternative visualization
+
+```{r severity-bar,echo=FALSE}
+ggplot(summ2,aes(x=Region,y=sevM,fill=TidalHeight))+geom_col(position=position_dodge(width=0.9))+
+  geom_errorbar(aes(ymin=sevM-2*sevSE,ymax=sevM+2*sevSE),width=0.25,position=position_dodge(width=0.9))+
+  xlab("Region")+
+  ylab("Disease severity \n(% of leaf area)")+
+  scale_y_continuous(limits=c(0,0.15),expand=c(0,0))+
+  scale_fill_manual(values=c("wheat4","wheat3"))+
+  theme_bw()+
+  theme(axis.text=element_text(size=12),
+        axis.title=element_text(size=14))
+```
+
+### Transect-level prevalence, broken down by site
+```{r site_prevalence, echo=FALSE}
+ggplot(data=summ,aes(x=SiteCode,y=prev,color=TidalHeight))+
+  geom_point(position=position_dodge(width=0.75))+
+  facet_wrap(~Region)+
+  stat_summary(fun.y=mean,geom="point",shape=8,size=2,color="black",
+               show.legend=FALSE,position=position_dodge(width=0.75))+
+  scale_y_continuous(limits=c(0,1),breaks=c(0,0.25,0.5,0.75,1.0))+
+  scale_color_manual(values=c("wheat4","wheat3"))+
+  ylab("Wasting Disease Prevalence")+
+  labs(title="Wasting Disease Prevalence",
+       subtitle="Transect-level means, n=3 transects per tidal height per site")+
+  theme_bw()+
+  theme(strip.background = element_rect(fill="white"))
+
+```
+
+### Transect-level severity, broken down by site
+```{r site_severity, echo=FALSE,warning=FALSE}
+ggplot(data=summ,aes(x=SiteCode,y=sev,color=TidalHeight))+
+  geom_point(position=position_dodge(width=0.75))+
+  facet_wrap(~Region)+
+  stat_summary(fun.y=mean,geom="point",shape=8,size=2,color="black",
+               show.legend=FALSE,position=position_dodge(width=0.75))+
+  scale_y_continuous(limits=c(0,0.5),breaks=c(0,0.1,0.2,0.3,0.4,0.5))+
+  scale_color_manual(values=c("wheat4","wheat3"))+
+  xlab("Site Code")+
+  ylab("Wasting Disease Severity")+
+  labs(title="Wasting Dieseae Severity",
+       subtitle = "Transect-level means, n=3 transects per tidal height per site")+
+  theme_bw()+
+  theme(strip.background = element_rect(fill="white"))
+```

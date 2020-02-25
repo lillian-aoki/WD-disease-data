@@ -105,6 +105,24 @@ disease_most_summ <- disease_most%>%
 
 write.csv(disease_most_summ,"Disease_Summ_02-24-20.csv",row.names = FALSE)
 
+disease_most_summ2 <- disease_most%>%
+  group_by(Region,TidalHeight)%>%
+  summarize(prevM=mean(prevalence),sevM=mean(severity2,na.rm = TRUE),
+            lesion=mean(lesion_area,na.rm=TRUE),count=length(blade_num),
+            prevSD=sd(prevalence),prevSE=prevSD/sqrt(length(prevalence)),
+            sevSD=sd(severity2,na.rm=TRUE),sevSE=sevSD/sqrt(length(severity2)))
+
+write.csv(disease_most_summ2,"Disease_Summ2_02-24-20.csv",row.names=FALSE)
+
+disease_most_summ3 <- disease_most%>%
+  group_by(Region)%>%
+  summarize(prevM=mean(prevalence),sevM=mean(severity2,na.rm = TRUE),
+            lesion=mean(lesion_area,na.rm=TRUE),count=length(blade_num),
+            prevSD=sd(prevalence),prevSE=prevSD/sqrt(length(prevalence)),
+            sevSD=sd(severity2,na.rm=TRUE),sevSE=sevSD/sqrt(length(severity2)))
+
+write.csv(disease_most_summ3,"Disease_Summ3_02-24-20.csv",row.names=FALSE)
+
 ggplot(disease,aes(x=SiteCode,y=BladeArea.cm2.Final))+geom_boxplot()+
   facet_wrap(~Region,scales="free")
 ggplot(disease_most,aes(x=SiteCode,y=severity2))+geom_boxplot()+
